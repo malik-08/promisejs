@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <h1>PROMISES</h1> 
+
+   <form onclick = "checkweather();return false;">
+    <input type ="text" name = "cityName" id ="cityName">
+    <button> Check weather</button>
+   </form>
+
+   //div tags
+   <div id="weather"></div>
+
+  
+
+
+   <script>
+
+     //function
+
+   function checkweather(){
+    const cityRef = document.querySelector("#cityName");
+    const cityValue = cityRef.value;
+    const weatherRef = document.querySelector("#weather");
+
+    //API CALLING
+     const cityRes = fetch(`https://p2pclouds.up.railway.app/v1/learn/weather?city${cityValue}`);
+    cityRes.then((data) => {
+        return data.json();
+    }).then(data => {
+        weatherRef.innerHTML = `${cityValue} It's Temperature feels like  is ${data[current][feelslike]}`;
+    }).catch((error)=>{
+        console.log(error)
+    })
+       
+}
+
+   
+
+    //creaing a promise
+
+    const weatherRes = new Promise((resolve, reject) => {
+        if(2 > 3){
+            resolve(message ="10 degree");
+        }
+        else{
+            reject(message ="something went wrong");
+        }
+    });
+    weatherRes.then((data) => {
+        console.log("I am then " );
+        console.log(data);
+    }).catch((error) => {
+        console.log("I am catch ");
+        console.log(error);
+    });
+
+
+    // API CALL AND FETCH DATA USING PROMISES
+    const cityRes = fetch("https://p2pclouds.up.railway.app/v1/learn/weather?city=karachi");
+
+    cityRes.then((data) => {
+        return data.json();
+    }).then(data => {
+        console.log(data);
+    }).catch((error) => {
+        console.log(error);
+    });
+   </script>
+</body>
+</html>
